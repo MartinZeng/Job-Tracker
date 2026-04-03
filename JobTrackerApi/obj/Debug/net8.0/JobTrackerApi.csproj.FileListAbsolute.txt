@@ -1,0 +1,7 @@
+/Users/martinzeng/fcny-units/Projects/Job-Tracker/JobTrackerApi/obj/Debug/net8.0/rpswa.dswa.cache.json
+/Users/martinzeng/fcny-units/Projects/Job-Tracker/JobTrackerApi/obj/Debug/net8.0/JobTrackerApi.GeneratedMSBuildEditorConfig.editorconfig
+/Users/martinzeng/fcny-units/Projects/Job-Tracker/JobTrackerApi/obj/Debug/net8.0/JobTrackerApi.AssemblyInfoInputs.cache
+/Users/martinzeng/fcny-units/Projects/Job-Tracker/JobTrackerApi/obj/Debug/net8.0/JobTrackerApi.AssemblyInfo.cs
+/Users/martinzeng/fcny-units/Projects/Job-Tracker/JobTrackerApi/obj/Debug/net8.0/JobTrackerApi.csproj.CoreCompileInputs.cache
+/Users/martinzeng/fcny-units/Projects/Job-Tracker/JobTrackerApi/obj/Debug/net8.0/JobTrackerApi.MvcApplicationPartsAssemblyInfo.cache
+/Users/martinzeng/fcny-units/Projects/Job-Tracker/JobTrackerApi/obj/Debug/net8.0/JobTrackerApi.sourcelink.json
