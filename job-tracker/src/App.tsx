@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { useApplications } from './hooks/useApplications';
 import { StatusBadge } from './components/StatusBadge';
 import type { Application, AppStatus } from './types/Application';
+import { useIsAuthenticated } from '@azure/msal-react';
+import { LoginPage } from './components/LoginPage';
+import { UserProfile } from './components/UserProfile';
 
 const STATUSES: AppStatus[] = [
   'Saved',
@@ -31,6 +34,8 @@ export default function App() {
   const [editId, setEditId] = useState<number | null>(null);
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState<AppStatus | ''>('');
+  const isAuthenticated = useIsAuthenticated();
+  if (!isAuthenticated) return <LoginPage />;
 
   const filtered = apps.filter((a) => {
     const q = search.toLowerCase();
@@ -78,7 +83,7 @@ export default function App() {
     <div className='max-w-5xl mx-auto p-6'>
       <div className='flex items-center justify-between mb-6'>
         <h1 className='text-2xl font-semibold'>Job applications</h1>
-
+        <UserProfile />
         <button
           onClick={openAdd}
           className='px-4 py-2 text-sm border rounded-lg hover:bg-gray-50'
