@@ -1,11 +1,14 @@
 import axios from 'axios';
 import type { Application } from '../types/Application';
 
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 const api = axios.create({
-  baseURL: 'http://localhost:5081/api',
+  baseURL: BASE_URL,
 });
 
 export async function getApplications(): Promise<Application[]> {
+  if (!BASE_URL) return [];
   const res = await api.get('/applications');
   return res.data;
 }
