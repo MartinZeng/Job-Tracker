@@ -11,9 +11,6 @@ export const msalConfig: Configuration = {
   cache: {
     cacheLocation: 'sessionStorage',
   },
-  system: {
-    allowNativeBroker: false,
-  },
 };
 
 export const loginRequest: PopupRequest = {
