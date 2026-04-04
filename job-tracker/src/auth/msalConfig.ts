@@ -19,3 +19,5 @@ export const msalConfig: Configuration = {
 export const loginRequest: PopupRequest = {
   scopes: ['User.Read', 'openid', 'profile'],
 };
+
+console.log('Redirect URI:', import.meta.env.VITE_REDIRECT_URI);
