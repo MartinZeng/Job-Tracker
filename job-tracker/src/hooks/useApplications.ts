@@ -20,8 +20,12 @@ export function useApplications() {
   }, []);
 
   async function addApp(app: Omit<Application, 'id' | 'createdAt'>) {
-    const created = await createApplication(app);
-    setApps((prev) => [created, ...prev]);
+    try {
+      const created = await createApplication(app);
+      setApps((prev) => [created, ...prev]);
+    } catch {
+      setError('API not available — run the local API to add applications');
+    }
   }
 
   async function updateApp(id: number, changes: Partial<Application>) {
