@@ -9,8 +9,12 @@ const api = axios.create({
 
 export async function getApplications(): Promise<Application[]> {
   if (!BASE_URL) return [];
-  const res = await api.get('/applications');
-  return res.data;
+  try {
+    const res = await api.get('/applications');
+    return res.data;
+  } catch {
+    return [];
+  }
 }
 
 export async function createApplication(
