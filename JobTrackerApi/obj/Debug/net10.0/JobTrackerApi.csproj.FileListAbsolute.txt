@@ -167,3 +167,4 @@
 /Users/martinzeng/fcny-units/Projects/Job-Tracker/JobTrackerApi/bin/Debug/net10.0/Microsoft.IdentityModel.LoggingExtensions.dll
 /Users/martinzeng/fcny-units/Projects/Job-Tracker/JobTrackerApi/bin/Debug/net10.0/Microsoft.IdentityModel.Validators.dll
 /Users/martinzeng/fcny-units/Projects/Job-Tracker/JobTrackerApi/bin/Debug/net10.0/Microsoft.VisualStudio.SolutionPersistence.dll
+/Users/martinzeng/fcny-units/Projects/Job-Tracker/JobTrackerApi/obj/Debug/net10.0/JobTrackerApi.sourcelink.json
