@@ -1,6 +1,2 @@
-[build]
-builder = "nixpacks"
-buildCommand = "dotnet publish JobTrackerApi.csproj -c Release -o out"
-
 [deploy]
-startCommand = "dotnet out/JobTrackerApi.dll"
+startCommand = "dotnet JobTrackerApi.dll"
