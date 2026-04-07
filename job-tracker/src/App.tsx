@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useApplications } from './hooks/useApplications';
 import { StatusBadge } from './components/StatusBadge';
 import type { Application, AppStatus } from './types/Application';
-import { useIsAuthenticated } from '@azure/msal-react';
+import { useAuth0 } from '@auth0/auth0-react';
 import { LoginPage } from './components/LoginPage';
 import { UserProfile } from './components/UserProfile';
 
@@ -27,14 +27,13 @@ const empty = (): Omit<Application, 'id' | 'createdAt'> => ({
 });
 
 export default function App() {
-  const { apps, loading, error, addApp, updateApp, deleteApp } =
-    useApplications();
+  const { apps, addApp, updateApp, deleteApp } = useApplications();
   const [modal, setModal] = useState(false);
   const [form, setForm] = useState(empty());
   const [editId, setEditId] = useState<number | null>(null);
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState<AppStatus | ''>('');
-  const isAuthenticated = useIsAuthenticated();
+  const { isAuthenticated, isLoading } = useAuth0();
   if (!isAuthenticated) return <LoginPage />;
 
   const filtered = apps.filter((a) => {
@@ -65,19 +64,14 @@ export default function App() {
     else addApp(form);
     setModal(false);
   }
-  if (loading)
+  if (isLoading)
     return (
       <div className='max-w-5xl mx-auto p-6 text-gray-400 text-sm'>
         Loading...
       </div>
     );
 
-  if (error)
-    return (
-      <div className='max-w-5xl mx-auto p-6 text-red-500 text-sm'>
-        {error} — is the API running on port 5081?
-      </div>
-    );
+  if (!isAuthenticated) return <LoginPage />;
 
   return (
     <div className='max-w-5xl mx-auto p-6'>

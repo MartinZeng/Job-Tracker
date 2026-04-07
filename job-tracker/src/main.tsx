@@ -1,20 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { PublicClientApplication } from '@azure/msal-browser';
-import { MsalProvider } from '@azure/msal-react';
-import { msalConfig } from './auth/msalConfig';
+import { Auth0Provider } from '@auth0/auth0-react';
+import { auth0Config } from './auth/auth0Config';
 import App from './App';
 import './index.css';
 
-const msalInstance = new PublicClientApplication(msalConfig);
-
-await msalInstance.initialize();
-await msalInstance.handleRedirectPromise();
-
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <MsalProvider instance={msalInstance}>
+    <Auth0Provider {...auth0Config}>
       <App />
-    </MsalProvider>
+    </Auth0Provider>
   </React.StrictMode>,
 );
