@@ -5,6 +5,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { LoginPage } from './components/LoginPage';
 import { UserProfile } from './components/UserProfile';
 import { StatusSelect } from './components/StatusSelect';
+import { SignUpPage } from './components/SignUpPage';
 
 const STATUSES: AppStatus[] = [
   'Saved',
@@ -33,6 +34,7 @@ export default function App() {
   const [editId, setEditId] = useState<number | null>(null);
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState<AppStatus | ''>('');
+  const [showSignUp, setShowSignUp] = useState(false);
   const { isAuthenticated, isLoading } = useAuth0();
 
   if (isLoading)
@@ -42,7 +44,13 @@ export default function App() {
       </div>
     );
 
-  if (!isAuthenticated) return <LoginPage />;
+  if (!isAuthenticated) {
+    return showSignUp ? (
+      <SignUpPage onSignIn={() => setShowSignUp(false)} />
+    ) : (
+      <LoginPage onSignUp={() => setShowSignUp(true)} />
+    );
+  }
 
   const filtered = apps.filter((a) => {
     const q = search.toLowerCase();
