@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useApplications } from './hooks/useApplications';
-import { StatusBadge } from './components/StatusBadge';
 import type { Application, AppStatus } from './types/Application';
 import { useAuth0 } from '@auth0/auth0-react';
 import { LoginPage } from './components/LoginPage';
 import { UserProfile } from './components/UserProfile';
+import { StatusSelect } from './components/StatusSelect';
 
 const STATUSES: AppStatus[] = [
   'Saved',
@@ -34,6 +34,14 @@ export default function App() {
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState<AppStatus | ''>('');
   const { isAuthenticated, isLoading } = useAuth0();
+
+  if (isLoading)
+    return (
+      <div className='max-w-5xl mx-auto p-6 text-gray-400 text-sm'>
+        Loading...
+      </div>
+    );
+
   if (!isAuthenticated) return <LoginPage />;
 
   const filtered = apps.filter((a) => {
@@ -70,8 +78,6 @@ export default function App() {
         Loading...
       </div>
     );
-
-  if (!isAuthenticated) return <LoginPage />;
 
   return (
     <div className='max-w-5xl mx-auto p-6'>
@@ -125,7 +131,10 @@ export default function App() {
                 <div className='text-xs text-gray-500'>{a.role}</div>
               </td>
               <td>
-                <StatusBadge status={a.status} />
+                <StatusSelect
+                  value={a.status}
+                  onChange={(status) => updateApp(a.id, { ...a, status })}
+                />
               </td>
               <td className='text-gray-500'>{a.dateApplied || '—'}</td>
               <td className='text-gray-500'>{a.location || '—'}</td>
@@ -173,17 +182,13 @@ export default function App() {
               }
               className='w-full mb-3 px-3 py-2 text-sm border rounded-lg'
             />
-            <select
-              value={form.status}
-              onChange={(e) =>
-                setForm({ ...form, status: e.target.value as AppStatus })
-              }
-              className='w-full mb-3 px-3 py-2 text-sm border rounded-lg'
-            >
-              {STATUSES.map((s) => (
-                <option key={s}>{s}</option>
-              ))}
-            </select>
+            <div className='mb-3'>
+              <StatusSelect
+                value={form.status}
+                onChange={(status) => setForm({ ...form, status })}
+              />
+            </div>
+
             <textarea
               placeholder='Notes'
               value={form.notes}
