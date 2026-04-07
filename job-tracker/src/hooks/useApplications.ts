@@ -21,10 +21,16 @@ export function useApplications() {
 
   async function addApp(app: Omit<Application, 'id' | 'createdAt'>) {
     try {
+      console.log('Adding app:', app);
+      console.log('BASE_URL:', import.meta.env.VITE_API_URL);
       const created = await createApplication(app);
+      console.log('Created:', created);
       setApps((prev) => [created, ...prev]);
-    } catch {
-      setError('API not available — run the local API to add applications');
+    } catch (e) {
+      console.error('Error adding app:', e);
+      setError(
+        'This demo is running without a live API. Run the app locally to add applications.',
+      );
     }
   }
 
