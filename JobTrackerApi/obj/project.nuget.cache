@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "rG7l92GucEc=",
+  "dgSpecHash": "uZNWe7i64hQ=",
   "success": true,
   "projectFilePath": "/Users/martinzeng/fcny-units/Projects/Job-Tracker/JobTrackerApi/JobTrackerApi.csproj",
   "expectedPackageFiles": [
@@ -9,7 +9,7 @@
     "/Users/martinzeng/.nuget/packages/azure.security.keyvault.certificates/4.6.0/azure.security.keyvault.certificates.4.6.0.nupkg.sha512",
     "/Users/martinzeng/.nuget/packages/azure.security.keyvault.secrets/4.6.0/azure.security.keyvault.secrets.4.6.0.nupkg.sha512",
     "/Users/martinzeng/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
-    "/Users/martinzeng/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/9.0.0/microsoft.aspnetcore.authentication.jwtbearer.9.0.0.nupkg.sha512",
+    "/Users/martinzeng/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/10.0.5/microsoft.aspnetcore.authentication.jwtbearer.10.0.5.nupkg.sha512",
     "/Users/martinzeng/.nuget/packages/microsoft.aspnetcore.authentication.openidconnect/9.0.0/microsoft.aspnetcore.authentication.openidconnect.9.0.0.nupkg.sha512",
     "/Users/martinzeng/.nuget/packages/microsoft.bcl.asyncinterfaces/8.0.0/microsoft.bcl.asyncinterfaces.8.0.0.nupkg.sha512",
     "/Users/martinzeng/.nuget/packages/microsoft.bcl.cryptography/9.0.4/microsoft.bcl.cryptography.9.0.4.nupkg.sha512",

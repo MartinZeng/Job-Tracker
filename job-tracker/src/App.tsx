@@ -35,7 +35,7 @@ export default function App() {
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState<AppStatus | ''>('');
   const [showSignUp, setShowSignUp] = useState(false);
-  const { isAuthenticated, isLoading } = useAuth0();
+  const { isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
 
   if (isLoading)
     return (
@@ -89,6 +89,15 @@ export default function App() {
 
   return (
     <div className='max-w-5xl mx-auto p-6'>
+      <button
+        onClick={async () => {
+          const token = await getAccessTokenSilently();
+          console.log('TOKEN:', token);
+        }}
+        className='text-xs text-gray-400'
+      >
+        log token
+      </button>
       <div className='flex items-center justify-between mb-6'>
         <h1 className='text-2xl font-semibold'>Job applications</h1>
         <UserProfile />
