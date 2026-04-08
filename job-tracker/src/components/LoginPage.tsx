@@ -28,7 +28,6 @@ export function LoginPage({ onSignUp }: Props) {
         <div className='w-full md:w-1/2 bg-white p-16 flex flex-col justify-center gap-5'>
           <div>
             <h2 className='text-base font-semibold text-gray-900'>Sign in</h2>
-            <p className='text-xs text-gray-400 mt-1'>Welcome back</p>
           </div>
 
           <div className='flex flex-col gap-2'>
@@ -117,10 +116,6 @@ export function LoginPage({ onSignUp }: Props) {
             >
               Sign up
             </button>
-          </p>
-
-          <p className='text-xs text-gray-300 text-center'>
-            By signing in you agree to our terms of service
           </p>
         </div>
       </div>
