@@ -18,31 +18,18 @@ export function useApplications() {
     if (isLoading || !isAuthenticated) return;
 
     getAccessTokenSilently()
-      .then((token) => {
-        console.log('Token:', token);
-        return getApplications(token);
-      })
-      .then((data) => {
-        console.log('Apps:', data);
-        setApps(data);
-      })
-      .catch((e) => {
-        console.error('Failed:', e);
-        setError('Could not load applications');
-      })
+      .then((token) => getApplications(token))
+      .then(setApps)
+      .catch(() => setError('Could not load applications'))
       .finally(() => setLoading(false));
   }, [getAccessTokenSilently, isAuthenticated, isLoading]);
 
   async function addApp(app: Omit<Application, 'id' | 'createdAt'>) {
     try {
       const token = await getAccessTokenSilently();
-      console.log('addApp token:', token);
-      console.log('addApp data:', app);
       const created = await createApplication(token, app);
-      console.log('addApp created:', created);
       setApps((prev) => [created, ...prev]);
-    } catch (e) {
-      console.error('addApp error:', e);
+    } catch {
       setError('Failed to add application');
     }
   }
