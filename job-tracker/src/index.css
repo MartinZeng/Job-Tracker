@@ -1,3 +1,62 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+.dark {
+  background-color: #0f172a;
+  color: #e2e8f0;
+}
+
+.dark .bg-white {
+  background-color: #1e293b !important;
+}
+.dark .bg-gray-50 {
+  background-color: #0f172a !important;
+}
+.dark .bg-gray-100 {
+  background-color: #1e293b !important;
+}
+.dark .bg-gray-900 {
+  background-color: #6366f1 !important;
+}
+.dark .text-gray-900 {
+  color: #f1f5f9 !important;
+}
+.dark .text-gray-500 {
+  color: #94a3b8 !important;
+}
+.dark .text-gray-400 {
+  color: #64748b !important;
+}
+.dark .border-gray-100 {
+  border-color: #334155 !important;
+}
+.dark .border-gray-200 {
+  border-color: #334155 !important;
+}
+.dark .hover\:bg-gray-50:hover {
+  background-color: #1e293b !important;
+}
+.dark .hover\:bg-gray-200:hover {
+  background-color: #334155 !important;
+}
+.dark input {
+  background-color: #1e293b !important;
+  border-color: #334155 !important;
+  color: #e2e8f0 !important;
+}
+.dark table {
+  background-color: #0f172a !important;
+}
+.dark tr {
+  border-color: #334155 !important;
+}
+.dark thead tr {
+  background-color: #1e293b !important;
+}
+.dark th {
+  color: #64748b !important;
+}
+.dark td {
+  color: #94a3b8 !important;
+}

@@ -49,6 +49,17 @@ export default function App() {
   const [showSignUp, setShowSignUp] = useState(false);
   const { isAuthenticated, isLoading } = useAuth0();
 
+  const now = new Date();
+  const lastUpdated = now.toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+  });
+  const lastUpdatedDate = now.toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+  });
+
   if (isLoading)
     return (
       <div className='max-w-5xl mx-auto p-6 text-gray-400 text-sm'>
@@ -96,19 +107,15 @@ export default function App() {
       {/* Header */}
       <div className='flex items-center justify-between pb-4 border-b border-gray-100 mb-4'>
         <div>
-          <div className='text-xs text-gray-400 mb-0.5'>Welcome back</div>
           <h1 className='text-lg font-semibold text-gray-900 tracking-tight'>
-            Your pipeline
+            Job applications
           </h1>
+          <p className='text-xs text-gray-400 mt-1'>
+            Last updated {lastUpdatedDate} at {lastUpdated}
+          </p>
         </div>
         <div className='flex items-center gap-3'>
           <UserProfile />
-          <button
-            onClick={openAdd}
-            className='px-4 py-2 text-sm font-medium bg-gray-900 text-white rounded-lg hover:bg-gray-700'
-          >
-            + Add application
-          </button>
         </div>
       </div>
 
@@ -145,6 +152,14 @@ export default function App() {
             </button>
           );
         })}
+        <div className='ml-auto'>
+          <button
+            onClick={openAdd}
+            className='px-4 py-2 text-sm font-medium bg-gray-900 text-white rounded-lg hover:bg-gray-700'
+          >
+            + Add application
+          </button>
+        </div>
       </div>
 
       {/* Search */}
