@@ -3,11 +3,13 @@ import { useApplications } from './hooks/useApplications';
 import type { Application, AppStatus } from './types/Application';
 import { useAuth0 } from '@auth0/auth0-react';
 import { LoginPage } from './components/LoginPage';
+import { SignUpPage } from './components/SignUpPage';
 import { UserProfile } from './components/UserProfile';
 import { StatusSelect } from './components/StatusSelect';
-import { SignUpPage } from './components/SignUpPage';
+import { ActionMenu } from './components/ActionMenu';
 
 const STATUSES: AppStatus[] = [
+  'Not applied',
   'Saved',
   'Applied',
   'Interview',
@@ -16,10 +18,20 @@ const STATUSES: AppStatus[] = [
   'Ghosted',
 ];
 
+const STATUS_FILTER_STYLES: Record<AppStatus, { bg: string; text: string }> = {
+  'Not applied': { bg: '#f1f5f9', text: '#475569' },
+  Saved: { bg: '#FAEEDA', text: '#633806' },
+  Applied: { bg: '#E6F1FB', text: '#0C447C' },
+  Interview: { bg: '#EAF3DE', text: '#27500A' },
+  Offer: { bg: '#E1F5EE', text: '#085041' },
+  Rejected: { bg: '#FCEBEB', text: '#791F1F' },
+  Ghosted: { bg: '#F1EFE8', text: '#444441' },
+};
+
 const empty = (): Omit<Application, 'id' | 'createdAt'> => ({
   company: '',
   role: '',
-  status: 'Applied',
+  status: 'Not applied',
   dateApplied: '',
   salary: '',
   location: '',
@@ -67,108 +79,165 @@ export default function App() {
     setEditId(null);
     setModal(true);
   }
-
   function openEdit(a: Application) {
     const { id, ...rest } = a;
     setForm(rest);
     setEditId(id);
     setModal(true);
   }
-
   function save() {
     if (editId) updateApp(editId, form);
     else addApp(form);
     setModal(false);
   }
-  if (isLoading)
-    return (
-      <div className='max-w-5xl mx-auto p-6 text-gray-400 text-sm'>
-        Loading...
-      </div>
-    );
 
   return (
     <div className='max-w-5xl mx-auto p-6'>
-      <div className='flex items-center justify-between mb-6'>
-        <h1 className='text-2xl font-semibold'>Job applications</h1>
-        <UserProfile />
-        <button
-          onClick={openAdd}
-          className='px-4 py-2 text-sm border rounded-lg hover:bg-gray-50'
-        >
-          + Add application
-        </button>
+      {/* Header */}
+      <div className='flex items-center justify-between pb-4 border-b border-gray-100 mb-4'>
+        <div>
+          <div className='text-xs text-gray-400 mb-0.5'>Welcome back</div>
+          <h1 className='text-lg font-semibold text-gray-900 tracking-tight'>
+            Your pipeline
+          </h1>
+        </div>
+        <div className='flex items-center gap-3'>
+          <UserProfile />
+          <button
+            onClick={openAdd}
+            className='px-4 py-2 text-sm font-medium bg-gray-900 text-white rounded-lg hover:bg-gray-700'
+          >
+            + Add application
+          </button>
+        </div>
       </div>
 
-      {/* Filters */}
+      {/* Pill filters */}
+      <div className='flex gap-2 mb-4 flex-wrap'>
+        <button
+          onClick={() => setFilter('')}
+          className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
+            filter === ''
+              ? 'bg-gray-900 text-white'
+              : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+          }`}
+        >
+          All
+        </button>
+        {STATUSES.map((s) => {
+          const style = STATUS_FILTER_STYLES[s];
+          return (
+            <button
+              key={s}
+              onClick={() => setFilter(s === filter ? '' : s)}
+              style={
+                filter === s
+                  ? { backgroundColor: style.bg, color: style.text }
+                  : {}
+              }
+              className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
+                filter === s
+                  ? ''
+                  : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+              }`}
+            >
+              {s}
+            </button>
+          );
+        })}
+      </div>
 
-      <div className='flex gap-3 mb-4'>
+      {/* Search */}
+      <div className='mb-4'>
         <input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder='Search company or role...'
-          className='flex-1 px-3 py-2 text-sm border rounded-lg'
+          className='w-full px-3 py-2 text-sm border border-gray-200 rounded-lg bg-gray-50 outline-none focus:border-gray-400'
         />
-        <select
-          value={filter}
-          onChange={(e) => setFilter(e.target.value as AppStatus | '')}
-          className='px-3 py-2 text-sm border rounded-lg'
-        >
-          <option value=''>All statuses</option>
-          {STATUSES.map((s) => (
-            <option key={s}>{s}</option>
-          ))}
-        </select>
       </div>
+
       {/* Table */}
-      <table className='w-full text-sm'>
-        <thead>
-          <tr className='text-left text-xs text-gray-500 border-b'>
-            <th className='pb-2 font-medium'>Company / role</th>
-            <th className='pb-2 font-medium'>Status</th>
-            <th className='pb-2 font-medium'>Applied</th>
-            <th className='pb-2 font-medium'>Location</th>
-            <th className='pb-2 font-medium'></th>
-          </tr>
-        </thead>
-        <tbody>
-          {filtered.map((a) => (
-            <tr key={a.id} className='border-b hover:bg-gray-50'>
-              <td className='py-3'>
-                <div className='font-medium'>{a.company}</div>
-                <div className='text-xs text-gray-500'>{a.role}</div>
-              </td>
-              <td>
-                <StatusSelect
-                  value={a.status}
-                  onChange={(status) => updateApp(a.id, { ...a, status })}
-                />
-              </td>
-              <td className='text-gray-500'>{a.dateApplied || '—'}</td>
-              <td className='text-gray-500'>{a.location || '—'}</td>
-              <td className='text-right'>
-                <button
-                  onClick={() => openEdit(a)}
-                  className='px-2 py-1 text-xs border rounded mr-1 hover:bg-gray-50'
+      <div className='border border-gray-100 rounded-xl overflow-visible'>
+        <table className='w-full' style={{ borderCollapse: 'collapse' }}>
+          <thead>
+            <tr className='bg-gray-50 border-b border-gray-100 rounded-t-xl'>
+              {[
+                'Company / role',
+                'Status',
+                'Applied',
+                'Location',
+                'Salary',
+                '',
+              ].map((h) => (
+                <th
+                  key={h}
+                  className='text-left text-xs text-gray-400 font-medium uppercase tracking-wide px-3 py-2'
                 >
-                  Edit
-                </button>
-                <button
-                  onClick={() => deleteApp(a.id)}
-                  className='px-2 py-1 text-xs text-red-600 border border-red-200 rounded hover:bg-red-50'
-                >
-                  Delete
-                </button>
-              </td>
+                  {h}
+                </th>
+              ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {filtered.length === 0 && (
+              <tr>
+                <td
+                  colSpan={6}
+                  className='text-center py-10 text-sm text-gray-400'
+                >
+                  No applications yet
+                </td>
+              </tr>
+            )}
+            {filtered.map((a, i) => (
+              <tr
+                key={a.id}
+                style={{
+                  borderBottom:
+                    i < filtered.length - 1 ? '0.5px solid #f5f5f5' : 'none',
+                }}
+              >
+                <td className='px-3 py-3'>
+                  <div className='text-sm font-medium text-gray-900'>
+                    {a.company || '—'}
+                  </div>
+                  {a.role && (
+                    <div className='text-xs text-gray-400 mt-0.5'>{a.role}</div>
+                  )}
+                </td>
+                <td className='px-3 py-3'>
+                  <StatusSelect
+                    value={a.status}
+                    onChange={(status) => updateApp(a.id, { ...a, status })}
+                  />
+                </td>
+                <td className='px-3 py-3 text-xs text-gray-400 whitespace-nowrap'>
+                  {a.dateApplied || '—'}
+                </td>
+                <td className='px-3 py-3 text-xs text-gray-400'>
+                  {a.location || '—'}
+                </td>
+                <td className='px-3 py-3 text-xs text-gray-400 whitespace-nowrap'>
+                  {a.salary || '—'}
+                </td>
+                <td className='px-3 py-3'>
+                  <ActionMenu
+                    onEdit={() => openEdit(a)}
+                    onDelete={() => deleteApp(a.id)}
+                  />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
       {/* Modal */}
       {modal && (
         <div className='fixed inset-0 bg-black/30 flex items-center justify-center z-50'>
           <div className='bg-white rounded-xl p-6 w-full max-w-md shadow-xl'>
-            <h2 className='text-lg font-semibold mb-4'>
+            <h2 className='text-base font-semibold mb-4'>
               {editId ? 'Edit' : 'Add'} application
             </h2>
             {(['company', 'role', 'salary', 'location', 'link'] as const).map(
@@ -178,7 +247,7 @@ export default function App() {
                   placeholder={f.charAt(0).toUpperCase() + f.slice(1)}
                   value={form[f]}
                   onChange={(e) => setForm({ ...form, [f]: e.target.value })}
-                  className='w-full mb-3 px-3 py-2 text-sm border rounded-lg'
+                  className='w-full mb-3 px-3 py-2 text-sm border border-gray-200 rounded-lg'
                 />
               ),
             )}
@@ -188,7 +257,7 @@ export default function App() {
               onChange={(e) =>
                 setForm({ ...form, dateApplied: e.target.value })
               }
-              className='w-full mb-3 px-3 py-2 text-sm border rounded-lg'
+              className='w-full mb-3 px-3 py-2 text-sm border border-gray-200 rounded-lg'
             />
             <div className='mb-3'>
               <StatusSelect
@@ -196,18 +265,17 @@ export default function App() {
                 onChange={(status) => setForm({ ...form, status })}
               />
             </div>
-
             <textarea
               placeholder='Notes'
               value={form.notes}
               onChange={(e) => setForm({ ...form, notes: e.target.value })}
-              className='w-full mb-4 px-3 py-2 text-sm border rounded-lg resize-none'
+              className='w-full mb-4 px-3 py-2 text-sm border border-gray-200 rounded-lg resize-none'
               rows={3}
             />
             <div className='flex justify-end gap-2'>
               <button
                 onClick={() => setModal(false)}
-                className='px-4 py-2 text-sm border rounded-lg hover:bg-gray-50'
+                className='px-4 py-2 text-sm border border-gray-200 rounded-lg hover:bg-gray-50'
               >
                 Cancel
               </button>

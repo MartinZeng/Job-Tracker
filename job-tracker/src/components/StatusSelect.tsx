@@ -5,6 +5,7 @@ const STATUS_STYLES: Record<
   AppStatus,
   { dot: string; bg: string; text: string }
 > = {
+  'Not applied': { dot: '#94a3b8', bg: '#f1f5f9', text: '#475569' },
   Saved: { dot: '#854F0B', bg: '#FAEEDA', text: '#633806' },
   Applied: { dot: '#185FA5', bg: '#E6F1FB', text: '#0C447C' },
   Interview: { dot: '#3B6D11', bg: '#EAF3DE', text: '#27500A' },
@@ -14,6 +15,7 @@ const STATUS_STYLES: Record<
 };
 
 const STATUSES: AppStatus[] = [
+  'Not applied',
   'Saved',
   'Applied',
   'Interview',

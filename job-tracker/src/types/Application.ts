@@ -1,4 +1,5 @@
 export type AppStatus =
+  | 'Not applied'
   | 'Saved'
   | 'Applied'
   | 'Interview'

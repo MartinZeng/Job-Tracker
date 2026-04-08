@@ -2,14 +2,15 @@ import type { AppStatus } from '../types/Application';
 
 const STATUS_STYLES: Record<
   AppStatus,
-  { bg: string; text: string; dot: string }
+  { dot: string; bg: string; text: string }
 > = {
-  Saved: { bg: '#FAEEDA', text: '#633806', dot: '#854F0B' },
-  Applied: { bg: '#E6F1FB', text: '#0C447C', dot: '#185FA5' },
-  Interview: { bg: '#EAF3DE', text: '#27500A', dot: '#3B6D11' },
-  Offer: { bg: '#E1F5EE', text: '#085041', dot: '#085041' },
-  Rejected: { bg: '#FCEBEB', text: '#791F1F', dot: '#A32D2D' },
-  Ghosted: { bg: '#F1EFE8', text: '#444441', dot: '#444441' },
+  'Not applied': { dot: '#94a3b8', bg: '#f1f5f9', text: '#475569' },
+  Saved: { dot: '#854F0B', bg: '#FAEEDA', text: '#633806' },
+  Applied: { dot: '#185FA5', bg: '#E6F1FB', text: '#0C447C' },
+  Interview: { dot: '#3B6D11', bg: '#EAF3DE', text: '#27500A' },
+  Offer: { dot: '#085041', bg: '#E1F5EE', text: '#085041' },
+  Rejected: { dot: '#A32D2D', bg: '#FCEBEB', text: '#791F1F' },
+  Ghosted: { dot: '#444441', bg: '#F1EFE8', text: '#444441' },
 };
 
 export function StatusBadge({ status }: { status: AppStatus }) {
